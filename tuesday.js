@@ -345,7 +345,7 @@ const transactionHistory = () => {
     }
   });
 };
-transactionHistory();
+// transactionHistory();
 
 
 // Define a function that returns the total number of deposits.
@@ -382,6 +382,23 @@ const sumOfWithdrawals = () => {
 
 
 // -------------------------------------------------------------------Excercice 7
+//   Define a function that returns the number of male items in the order.
+//   Define a function that returns the number of female items in the order.
+//   Define a function that returns the number of summer items in the order.
+//   Define a function that returns the number of under garment items in the order.
+//   Define a function that returns the number of female under garment items in the order.
+//   Define a function that returns the sum of all the unique items summer in the order.
+//   Define a function that returns the sum of all the summer items in the order.
+//   Define a function that returns the sum of all the unique items male in the order.
+//   Define a function that returns the sum of all the male items in the order.
+//   Define a function that returns the sum of all the unique items female in the order.
+//   Define a function that returns the sum of all the female items in the cart.
+//   Define a function that mutates the object, adding an originalDate property as the current date.
+//   Define a function that mutates the object, adding a delivered property as false.
+//   Define a function that mutates the object, adding subtotal property, the sum of all the items in the order.
+//   Define a function that mutates the object, adding a salesTax property calculated at .07 percent * subtotal.
+//   Define a function that mutates the object, adding grandTotal property, the sum of all the items in the order & sales tax.
+
 
 
 const order = {
@@ -577,19 +594,3 @@ const sumNumberOfItems = () => {
 // sumNumberOfItems();
 
 
-//   Define a function that returns the number of male items in the order.
-//   Define a function that returns the number of female items in the order.
-//   Define a function that returns the number of summer items in the order.
-//   Define a function that returns the number of under garment items in the order.
-//   Define a function that returns the number of female under garment items in the order.
-//   Define a function that returns the sum of all the unique items summer in the order.
-//   Define a function that returns the sum of all the summer items in the order.
-//   Define a function that returns the sum of all the unique items male in the order.
-//   Define a function that returns the sum of all the male items in the order.
-//   Define a function that returns the sum of all the unique items female in the order.
-//   Define a function that returns the sum of all the female items in the cart.
-//   Define a function that mutates the object, adding an originalDate property as the current date.
-//   Define a function that mutates the object, adding a delivered property as false.
-//   Define a function that mutates the object, adding subtotal property, the sum of all the items in the order.
-//   Define a function that mutates the object, adding a salesTax property calculated at .07 percent * subtotal.
-//   Define a function that mutates the object, adding grandTotal property, the sum of all the items in the order & sales tax.
