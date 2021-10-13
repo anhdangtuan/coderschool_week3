@@ -582,7 +582,7 @@ const order = {
   ],
 };
 
-// Define a function that returns the sum number of items in the order.
+
 //   Define a function that returns the total number of unique items in the order.
 const sumNumberOfItems = () => {
   console.log('sum number of items:', order.orderItems.length);
