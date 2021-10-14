@@ -141,4 +141,66 @@ btcButton.addEventListener("click", () => {
   main("btc", true);
 });
 
+let usdtButton = document.getElementById("usdt");
+usdtButton.addEventListener("click", () => {
+  main("usdt", true);
+});
+
+let bnbButton = document.getElementById("bnb");
+bnbButton.addEventListener("click", () => {
+  main("bnb", true);
+});
 main();
+
+let adaButton = document.getElementById("ada");
+adaButton.addEventListener("click", () => {
+  main("ada", true);
+});
+main();
+// // ----------------------
+// async function getCryptoPrices() {
+//     const response = await fetch(url);
+//     const json = await response.json();
+//     const coin = json.data[0];
+//     renderLineGraph(coin);
+//   }
+
+//   function renderLineGraph(coin) {
+//     const ctx = document.getElementById("myChart");
+//     const price = coin.quote.USD.price;
+//     const [ninetyAgoPrice] = getHistoricPrices(coin.quote.USD);
+//     const timeAgo = ["90d", "60d", "30d", "7d", "24h", "1h", "Current"];
+//     const myChart = new Chart(ctx, {
+//       type: "line",
+//       data: {
+//         labels: timeAgo,
+//         datasets: [
+//           {
+//             label: "Price",
+//             borderWidth: 1,
+//             data: getHistoricPrices(coin.quote.USD),
+//             borderColor: "rgba(255, 99, 132, 1)",
+//             backgroundColor: "rgba(255, 99, 132, 0.2)",
+//           },
+//         ],
+//       },
+//       options: {
+//         tooltips: {
+//           enabled: true,
+//           mode: "nearest",
+//         },
+//         scales: {
+//           yAxes: [
+//             {
+//               ticks: {
+//                 beginAtZero: false,
+//                 suggestedMax: price,
+//                 suggestedMin: ninetyAgoPrice,
+//               },
+//             },
+//           ],
+//         },
+//       },
+//     });
+//   }
+  
