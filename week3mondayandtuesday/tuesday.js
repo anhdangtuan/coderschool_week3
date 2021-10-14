@@ -331,26 +331,49 @@ user.transactionsMonthToDate = [
   {amount: 100, type: 'withdrawal', category: 'Health'},
 ];
 // Use a for loop to print to the screen the transaction history for the month in this format:
-const transactionHistory = () => {
+const trans = user.transactionsMonthToDate;
+
+
+// Use a for loop to print to the screen the transaction history for the month in this format:
+const transactionHistoryPrint = () => {
   console.log('Balance:', `${user.currentBalance}`);
   console.log('Transaction History:');
   let amountOfMoney = user.currentBalance;
-  user.transactionsMonthToDate.forEach(transaction => {
-    if (transaction.type === 'deposit') {
-      amountOfMoney += transaction.amount;
-      console.log(`- You deposited \$${transaction.amount}. The new balance is \$${amountOfMoney}.`);
+  for (let i = 0; i < trans.length; i++) {
+    let tran = trans[i];
+    if (tran.type === 'deposit') {
+      amountOfMoney += tran.amount;
+      console.log(`- You deposited \$${tran.amount}. The new balance is \$${amountOfMoney}.`);
     } else {
-      amountOfMoney -= transaction.amount;
-      console.log(`- You withdrew \$${transaction.amount}. The new balance is \$${amountOfMoney}.`);
+      amountOfMoney -= tran.amount;
+      console.log(`- You withdrew \$${tran.amount}. The new balance is \$${amountOfMoney}.`);
+    }
+  }
+};
+// transactionHistoryPrint();
+
+
+// Change a little bit, using forEach
+const transactionHistoryPrint2 = () => {
+  console.log('Balance:', `${user.currentBalance}`);
+  console.log('Transaction History:');
+  let amountOfMoney = user.currentBalance;
+  trans.forEach(tran => {
+    if (tran.type === 'deposit') {
+      amountOfMoney += tran.amount;
+      console.log(`- You deposited \$${tran.amount}. The new balance is \$${amountOfMoney}.`);
+    } else {
+      amountOfMoney -= tran.amount;
+      console.log(`- You withdrew \$${tran.amount}. The new balance is \$${amountOfMoney}.`);
     }
   });
 };
-// transactionHistory();
+// transactionHistoryPrint2();
 
 
 // Define a function that returns the total number of deposits.
 const numberOfDeposits = () => {
-  const num = user.transactionsMonthToDate.reduce((acc, transaction) => acc + (transaction.type === 'deposit'), 0);
+  const num = trans.reduce((acc, tran) => acc + (tran.type === 'deposit'), 0);
   console.log('Number of Deposits:', num);
 };
 // numberOfDeposits();
@@ -358,7 +381,7 @@ const numberOfDeposits = () => {
 
 //   Define a function that returns the total number of withdrawals.
 const numberOfWithdrawals = () => {
-  const num = user.transactionsMonthToDate.reduce((acc, transaction) => acc + (transaction.type === 'withdrawal'), 0);
+  const num = trans.reduce((acc, tran) => acc + (tran.type === 'withdrawal'), 0);
   console.log('Number of Withdrawals:', num);
 };
 // numberOfWithdrawals();
@@ -366,21 +389,107 @@ const numberOfWithdrawals = () => {
 
 //   Define a function that returns the sum of deposits.
 const sumOfDeposits = () => {
-  const sum = user.transactionsMonthToDate.reduce((acc, transaction) => acc + transaction.amount * (transaction.type === 'deposit'), 0);
+  const sum = trans.reduce((acc, tran) => acc + tran.amount * (tran.type === 'deposit'), 0);
   console.log('Sum of Deposits:', sum);
 };
 // sumOfDeposits();
 
 
-//   Define a function that returns the sum of withdrawals.
+// Define a function that returns the sum of withdrawals.
 const sumOfWithdrawals = () => {
-  const sum = user.transactionsMonthToDate.reduce((acc, transaction) => acc + transaction.amount * (transaction.type === 'withdrawal'), 0);
+  const sum = trans.reduce((acc, tran) => acc + tran.amount * (tran.type === 'withdrawal'), 0);
   console.log('Sum of Withdrawals:', sum);
 };
 // sumOfWithdrawals();
 
 
+// Define a function that returns the difference between deposits and withdrawals.
+const diffBetweenDepositWithdrawals = () => {
+  const diff = trans.reduce((acc, tran) =>
+      // acc + tran.amount * (tran.type === 'deposit') - tran.amount * (tran.type === 'withdrawal'), 0);
+      tran.type === 'deposit' ? acc + tran.amount : acc - tran.amount,
+    0);
+  console.log('The diff between Deposits and Withdrawals:', diff);
+};
+diffBetweenDepositWithdrawals();
 
+
+// Define a function that returns a new balance for the next month.
+const newBalance = () => {
+  const balance = trans.reduce((acc, trans) =>
+      acc + trans.amount * (trans.type === 'deposit') - trans.amount * (trans.type === 'withdrawal')
+    , user.currentBalance);
+  console.log('New balance:', balance);
+};
+// newBalance();
+
+
+// Define a function that returns the sum of the groceries.
+const sumOfGroceries = () => {
+  const sum = trans.reduce((acc, tran) => acc + tran.amount * (tran.category === 'Groceries'), 0);
+  console.log('Sum of Groceries', sum);
+};
+// sumOfGroceries();
+
+
+//  Define a function that returns the sum of the entertainment.
+const entertainmentSum = () => {
+  const sum = trans.reduce((acc, tran) => acc + tran.amount * (tran.category === 'Entertainment'), 0);
+  console.log('Sum of Entertainment', sum);
+};
+// entertainmentSum();
+
+
+//   Define a function that returns the sum of the travel.
+const sumOfTravel = () => {
+  const sum = trans.reduce((acc, tran) => {
+    let check = tran.category.split(' ')[0];
+    return acc + tran.amount * (check === 'Travel');
+  }, 0);
+  console.log('Sum of Travel:', sum);
+};
+// sumOfTravel();
+
+
+// Define a function that given a conversion rate of 23000vnd to 1usd returns
+// if the account spent more usd than vnd was deposited into the account for the month.
+const usdToVND = 23000;
+
+
+// Define a function that returns an array of new objects where currency is VND and the amount is it's converted amount.
+const VNDCurrencyObject = () => {
+  return {
+    currentBalance: user.currentBalance * usdToVND,
+    transactionsMonthToDate: trans.map(tran => {
+      return {
+        category: tran.category,
+        amount: tran.amount * usdToVND,
+        type: tran.type,
+      };
+    }),
+  };
+};
+// const userVND = VNDCurrencyObject();
+// console.log(userVND);
+
+
+// Use a for loop to print out the transaction history for the month in this format:
+const transactionHistoryPrintVND = () => {
+  console.log('Balance:', `${user.currentBalance * usdToVND}đ`);
+  console.log('Transaction History:');
+  let amountOfMoney = user.currentBalance;
+  for (let i = 0; i < trans.length; i++) {
+    let tran = trans[i];
+    if (tran.type === 'deposit') {
+      amountOfMoney += tran.amount;
+      console.log(`- You deposited ${tran.amount * usdToVND}đ. The new balance is ${amountOfMoney * usdToVND}đ.`);
+    } else {
+      amountOfMoney -= tran.amount;
+      console.log(`- You withdrew ${tran.amount * usdToVND}đ. The new balance is ${amountOfMoney * usdToVND}đ.`);
+    }
+  }
+};
+// transactionHistoryPrintVND();
 // -------------------------------------------------------------------Excercice 7
 //   Define a function that returns the number of male items in the order.
 //   Define a function that returns the number of female items in the order.
@@ -583,14 +692,132 @@ const order = {
 };
 
 
-//   Define a function that returns the total number of unique items in the order.
-const sumNumberOfItems = () => {
-  console.log('sum number of items:', order.orderItems.length);
-  const allItems = [];
-  order.orderItems.forEach(item => allItems.push(item.item));
-  const allItemSet = new Set(allItems);
-  console.log('total number of unique items:', allItemSet.size);
-};
-// sumNumberOfItems();
+const orders = order.orderItems;
 
+// Define a function that returns the sum number of items in the order.
+const sumOfItems = () => {
+  const sum = orders.reduce((acc, order) => acc + order.quantity, 0);
+  console.log('Sum of all items: ', sum);
+};
+// sumOfItems();
+
+// Define a function that returns the total number of unique items in the order.
+// What is unique? Unique means there no duplicate in the collection?
+// Consider item repeats -> no unique
+const numberOfUniqueItems = () => {
+  const allItemNames = orders.map(order => order.item);
+  console.log(allItemNames);
+
+  const uniqueItemNames = allItemNames.filter(
+    name => allItemNames.indexOf(name) === allItemNames.lastIndexOf(name));
+  console.log(uniqueItemNames);
+
+  const result = uniqueItemNames.map(name => {
+    return orders.find(order => order.item === name);
+  });
+  console.log(result);
+};
+
+// numberOfUniqueItems();
+
+
+//   Define a function that returns the number of male items in the order.
+const numberOfMaleItems = () => {
+  const sum = order.orderItems.reduce((acc, ord) => acc + ord.quantity * (ord.gender === 'm'), 0);
+  console.log('Sum of all male items:', sum);
+};
+// numberOfMaleItems();
+
+
+//   Define a function that returns the number of female items in the order.
+const numberOfFemaleItems = () => {
+  const sum = order.orderItems.reduce((acc, ord) => acc + ord.quantity * (ord.gender === 'f'), 0);
+  console.log('Sum of all female items:', sum);
+};
+// numberOfFemaleItems();
+
+
+//   Define a function that returns the number of summer items in the order.
+const numberOfSummerItems = () => {
+  const sum = order.orderItems.reduce((acc, ord) => acc + ord.quantity * (ord.category === 'Summer'), 0);
+  console.log('Sum of all summer items:', sum);
+};
+// numberOfSummerItems();
+
+
+//   Define a function that returns the number of undergarment items in the order.
+const numberOfUndergarmentItems = () => {
+  const sum = order.orderItems.reduce((acc, ord) => acc + ord.quantity * (ord.category === 'Undergarment'), 0);
+  console.log('Sum of all undergarment items:', sum);
+};
+// numberOfUndergarmentItems();
+
+
+//   Define a function that returns the number of female undergarment items in the order.
+const numberOfFemaleUndergarmentItems = () => {
+  const sum = order.orderItems.reduce((acc, ord) => acc + ord.quantity * (ord.category === 'Undergarment' && ord.gender === 'f'), 0);
+  console.log('Sum of all female undergarment items:', sum);
+};
+// numberOfFemaleUndergarmentItems();
+
+
+//   Define a function that returns the sum of all the unique items summer in the order.
+const numberOfUniqueSummerItems = () => {
+  const summerOrders = orders.filter(order => order.category === 'Summer');
+  const allItemNames = summerOrders.map(order => order.item);
+  console.log(allItemNames);
+
+  const uniqueItemNames = allItemNames.filter(
+    name => allItemNames.indexOf(name) === allItemNames.lastIndexOf(name));
+  console.log(uniqueItemNames);
+
+  const result = uniqueItemNames.map(name => {
+    return orders.find(order => order.item === name);
+  });
+  console.log(result);
+};
+// numberOfUniqueSummerItems();
+
+
+//   Define a function that returns the sum of all the summer items in the order.
+const sumOfSummerItems = () => {
+  const sum = orders.reduce((acc, order) => acc + (order.quantity * (order.category === 'Summer')), 0);
+  console.log('Sum of all summer items: ', sum);
+};
+// sumOfSummerItems();
+
+
+//   Define a function that returns the sum of all the unique items male in the order.
+//   Define a function that returns the sum of all the male items in the order.
+//   Define a function that returns the sum of all the unique items female in the order.
+//   Define a function that returns the sum of all the female items in the cart.
+
+
+//   Define a function that mutates the object, adding an originalDate property as the current date.
+//   Define a function that mutates the object, adding a delivered property as false.
+//   Define a function that mutates the object, adding subtotal property, the sum of all the items in the order.
+//   Define a function that mutates the object, adding a salesTax property calculated at .07 percent * subtotal.
+//   Define a function that mutates the object, adding grandTotal property, the sum of all the items in the order & sales tax.
+const mutateObject = () => {
+  const originalDate = () => {
+    let today = new Date();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+    let year = today.getFullYear();
+    return day + '/' + month + '/' + year;
+  };
+  const newOrders = orders.map(order => {
+    let subtotal = order.price * order.quantity;
+    return {
+      ...order,
+      originalDate: originalDate(),
+      delivered: false,
+      subtotal: subtotal.toFixed(2),
+      saleTax: (subtotal * 0.07).toFixed(2),
+      grandTotal: (subtotal * 1.07).toFixed(2),
+    };
+  });
+  console.log(newOrders);
+};
+mutateObject();
 
